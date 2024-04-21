@@ -1,10 +1,8 @@
-'use strict';
-
-require('chai').should();
+import chai from 'chai';
+import encodeURL from '../lib/encode_url';
+chai.should();
 
 describe('encodeURL', () => {
-  const encodeURL = require('../dist/encode_url');
-
   it('regular', () => {
     const content = 'http://foo.com/';
     encodeURL(content).should.eql(content);
@@ -103,5 +101,9 @@ describe('encodeURL', () => {
   it('data URLs', () => {
     const content = 'data:,Hello%2C%20World!';
     encodeURL(content).should.eql(content);
+  });
+  it('encode pathname', () => {
+    const content = 'https://fóo.com/páth%20[square]';
+    encodeURL(content).should.eql('https://fóo.com/p%C3%A1th%20%5Bsquare%5D');
   });
 });
